@@ -18,7 +18,7 @@
 	for (let x = 0; x < columns; x++) {
 		grid[x] = new Array(rows)
 		for (let y = 0; y < rows; y++) {
-			grid[x][y] = { x, y }
+			grid[x][y] = { x, y, clicked: false }
 		}
 	}
 
