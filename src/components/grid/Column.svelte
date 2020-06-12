@@ -13,9 +13,11 @@
 <script>
     export let column
 
-    let margin = 1;
-
     import Square from './Square.svelte'
+
+
+
+
 </script>
 
 <div class="back">

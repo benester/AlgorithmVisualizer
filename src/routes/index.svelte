@@ -11,16 +11,16 @@
 <script>
 	import Column from '../components/grid/Column.svelte'
 
-	let columns = 64
-	let rows = 32
-	let grid = new Array(columns)
+	import { gridStore } from '../stores/gridStore'
 
-	for (let x = 0; x < columns; x++) {
-		grid[x] = new Array(rows)
-		for (let y = 0; y < rows; y++) {
-			grid[x][y] = { x, y, clicked: false }
-		}
-	}
+	let model
+
+	gridStore.subscribe(data => {
+		model = data
+	})
+
+	let grid = model.grid
+
 
 
 </script>
@@ -29,8 +29,8 @@
 	<title>Algoviz</title>
 </svelte:head>
 
-<div class="back">
-		{#each grid as column}
+<div class="back" ondragstart="return false;" ondrop="return false;">
+	{#each grid as column}
 			<Column {column}/>
 		{/each}
 </div>

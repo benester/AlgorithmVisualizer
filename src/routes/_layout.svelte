@@ -1,5 +1,6 @@
 <script>
 	import Nav from '../components/Nav.svelte';
+
 </script>
 
 <style>
@@ -16,7 +17,7 @@
 	}
 </style>
 
-<Nav/>
+<Nav />
 
 <main class="main">
 	<slot></slot>

@@ -1,5 +1,5 @@
 <style>
-    .back {
+    .default {
         justify-content: center;
         align-content: center;
         text-align: center;
@@ -9,11 +9,26 @@
         margin-bottom: 1px;
         height: 100%;
     }
-    .back:hover {
-        background-color: rgb(173, 173, 169);
-    }
-    .square {
+
+    .clicked {
+        justify-content: center;
+        align-content: center;
+        text-align: center;
+        background-color: rgb(72, 52, 160);
         width: 100%;
+        margin-top: 1px;
+        margin-bottom: 1px;
+        height: 100%;
+    }
+
+    .showingAsConnection {
+        justify-content: center;
+        align-content: center;
+        text-align: center;
+        background-color: rgb(243, 220, 8);
+        width: 100%;
+        margin-top: 1px;
+        margin-bottom: 1px;
         height: 100%;
     }
 </style>
@@ -21,19 +36,35 @@
 <script>
     export let square;
 
+    import Nav from '../Nav.svelte'
+    import { gridStore } from '../../stores/gridStore'
+
+    let x = square.x
+    let y = square.y
+
+    let model
+
+    gridStore.subscribe(data => model = data.grid[x][y])
+
     function handleClick() {
-        square.clicked = !square.clicked
+        gridStore.click({ x, y })
+    }
+
+    function handleMouseOver(event) {
+        if (event.buttons == 1) {
+            gridStore.click({ x, y })
+        } else {
+            gridStore.showConnections({ x, y })
+        }
+    }
+
+    function handeMouseOut() {
+        gridStore.hideConnections({ x, y })
     }
 </script>
 
-<div class="back" on:click={handleClick}>
-    {#if square.clicked}
-    <div style="background-color: blue;" class="square">
+<div class="{model.state}" on:click={handleClick} on:mouseover={handleMouseOver} on:mouseout={handeMouseOut}
+    ondragstart="return false;" ondrop="return false;">
 
-    </div>
-    {:else}
-    <div style="background-color: red;" class="square">
 
-    </div>
-    {/if}
 </div>
