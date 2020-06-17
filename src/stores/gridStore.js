@@ -2,10 +2,10 @@ import { writable } from 'svelte/store'
 //This is the model that is wrapped in this store.
 import Model from '../model/model'
 
-let defaultGridStore = new Model(32, 16)
+let model = new Model(32, 16)
 
 function createStore() {
-    const { subscribe, set, update } = writable(defaultGridStore)
+    const { subscribe, set, update } = writable(model)
 
     return {
         subscribe,
@@ -22,6 +22,11 @@ function createStore() {
             model.hideConnections(arg)
             return model
         }),
+        showVisited: () => update(model => {
+            model.showVisited()
+            return model
+        }),
+        setVisited: arg => model.setVisited(arg),
         update
     }
 }

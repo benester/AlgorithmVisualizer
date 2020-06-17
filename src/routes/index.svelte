@@ -10,18 +10,20 @@
 
 <script>
 	import Column from '../components/grid/Column.svelte'
-
 	import { gridStore } from '../stores/gridStore'
+	import bfpf from '../stores/breadthFirst.js'
 
-	let model
+	let grid
 
 	gridStore.subscribe(data => {
-		model = data
+		grid = data.grid
 	})
 
-	let grid = model.grid
-
-
+	function find() {
+		gridStore.setVisited(false)
+		bfpf(grid)
+		gridStore.showVisited()
+	}
 
 </script>
 
@@ -29,8 +31,9 @@
 	<title>Algoviz</title>
 </svelte:head>
 
+<button on:click={find}>GO!</button>
 <div class="back" ondragstart="return false;" ondrop="return false;">
 	{#each grid as column}
 			<Column {column}/>
-		{/each}
+	{/each}
 </div>

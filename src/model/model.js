@@ -37,11 +37,31 @@ export default class AlgoWizModel {
             }
         }
 
+        this.grid[0][0].state = "beginning"
+        this.grid[columns - 4][rows - 5].state = "end"
+
     }
 
     click({ x, y }) {
         this.grid[x][y].click()
     }
+
+    showVisited() {
+        this.grid.forEach(col => col.forEach(sq => sq.showVisited()))
+    }
+
+    setVisited(status) {
+        this.grid.forEach(col => col.forEach(sq => sq.setVisited(status)))
+    }
+
+
+
+
+
+
+
+
+
 
     showConnections({ x, y }) {
         this.grid[x][y].showConnections()
@@ -49,4 +69,6 @@ export default class AlgoWizModel {
     hideConnections({ x, y }) {
         this.grid[x][y].hideConnections()
     }
+
+
 }
