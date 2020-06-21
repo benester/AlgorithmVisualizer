@@ -2,9 +2,14 @@
 	.back {
 		height: 80%;
 		width: 80%;
-		margin-top: 1vh;
 		display: flex;
 		flex-direction: row;
+		margin-bottom: 4vh;
+	}
+
+	p {
+		margin-top: 3vh;
+		color: aliceblue;
 	}
 </style>
 
@@ -31,7 +36,10 @@
 <svelte:head>
 	<title>Algoviz</title>
 </svelte:head>
-
+<p>
+	Right-click to place the start- and end squares. Left click and drag to place walls.
+	Click the button to display the shortest path (if any)
+</p>
 <button on:click={find}>Run Algorithm</button>
 <div class="back" ondragstart="return false;" ondrop="return false;">
 	{#each model.grid as column}
