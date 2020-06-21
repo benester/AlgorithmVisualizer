@@ -11,13 +11,9 @@
 </style>
 
 <script>
-    export let column
-
     import Square from './Square.svelte'
 
-
-
-
+    export let column
 </script>
 
 <div class="back">

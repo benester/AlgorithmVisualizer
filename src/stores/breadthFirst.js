@@ -1,10 +1,13 @@
-export default function bfpf(grid) {
+export default function bfpf(model) {
     // the start is at [0][0], we want to get to [cols][rows] and we assume that there is a path
+    let grid = model.grid
+    let start = model.beginning
+    if (!start) return
 
-    grid.map(col => col.map(sq => { sq.setVisited(false); return sq }))
+    grid.forEach(col => col.forEach(sq => sq.setVisited(false)));
 
     //start is the start square
-    let start = grid[0][0]
+    start.path = []
     //we have visited the start square
     start.setVisited(true)
 
@@ -18,18 +21,15 @@ export default function bfpf(grid) {
             let square = current.connections[i]
             if (square && !square.visited && square.state != 'clicked') {
                 square.visited = true
+                square.addToPath([...current.path, current])
                 queue.push(square)
                 if (square.state == 'end')
                     end = square
             }
-            if (end) {
-                break
-            }
+            if (end) break
         }
-        if (end) {
-            break
-        }
+        if (end) break
     }
 
-    console.log(end)
+    return end
 }

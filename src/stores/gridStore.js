@@ -14,6 +14,11 @@ function createStore() {
             model.click(arg)
             return model
         }),
+        rClick: arg => update(model => {
+            model.rClick(arg)
+            return model
+        })
+        ,
         showConnections: arg => update(model => {
             model.showConnections(arg)
             return model
@@ -26,7 +31,12 @@ function createStore() {
             model.showVisited()
             return model
         }),
-        setVisited: arg => model.setVisited(arg),
+        showPath: (square) => update(model => {
+            model.showPath(square)
+            return model
+        })
+        ,
+        resetHighlights: () => model.resetHighlights(),
         update
     }
 }

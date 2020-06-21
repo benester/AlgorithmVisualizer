@@ -1,26 +1,12 @@
 export default class Square {
     constructor(x, y) {
+        this.pos = { x, y }
         this.x = x
         this.y = y
         this.connections = new Array(4)
         this.state = "default"
         this.visited = false
-    }
-
-    showConnections() {
-        if (this.state == "clicked")
-            return
-        this.connections.forEach(square => {
-            if (square && square.state != "clicked")
-                square.state = "showingAsConnection"
-        })
-    }
-
-    hideConnections() {
-        this.connections.forEach(square => {
-            if (square && square.state == "showingAsConnection")
-                square.state = "default"
-        });
+        this.path = []
     }
 
     click() {
@@ -34,6 +20,9 @@ export default class Square {
             case "highlight":
                 this.state = "clicked"
                 break;
+            case "path":
+                this.state = "clicked"
+                break;
             default:
                 break;
         }
@@ -43,12 +32,24 @@ export default class Square {
         this.visited = status
     }
 
+    resetHighlights() {
+        if (this.state == 'path' || this.state == 'highlight')
+            this.state = 'default'
+        this.path = []
+    }
+
     showVisited() {
         if (!this.visited && this.state == 'highlight') {
             this.state = 'default'
             return
         }
-        if (this.visited && this.state != 'beginning' && this.state != 'end')
+        if (this.visited && this.state != 'beginning' && this.state != 'end' && this.state != 'path')
             this.state = 'highlight'
+    }
+
+    addToPath(squares) {
+        squares.forEach(square => {
+            this.path.push(square)
+        });
     }
 }

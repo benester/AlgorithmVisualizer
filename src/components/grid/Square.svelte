@@ -31,7 +31,10 @@
 
     .highlight {
         background-color: rgb(142, 226, 135);
+    }
 
+    .path {
+        background-color: cornflowerblue;
     }
 </style>
 
@@ -46,25 +49,26 @@
 
     let model
 
-    gridStore.subscribe(data => model = data.grid[x][y])
+    gridStore.subscribe(data => {
+        model = data.grid[x][y]
+    })
 
-    function handleClick() {
-        gridStore.click({ x, y })
-    }
-
-    function handleMouseOver(event) {
-        if (event.buttons == 1) {
+    function handleClick(event) {
+        if (event.which == 1) {
             gridStore.click({ x, y })
-        } else {
-            //gridStore.showConnections({ x, y })
+        } else if (event.which == 3) {
+            event.preventDefault()
+            gridStore.rClick({ x, y })
         }
     }
 
-    function handeMouseOut() {
-        //gridStore.hideConnections({ x, y })
+    function handleMouseOver(event) {
+        if (event.buttons == 1)
+            gridStore.click({ x, y })
     }
+
 </script>
 
-<div class="{model.state}" on:click={handleClick} on:mouseover={handleMouseOver} on:mouseout={handeMouseOut}
-    ondragstart="return false;" ondrop="return false;">
+<div class="{model.state}" on:click={handleClick} on:mouseover={handleMouseOver} ondragstart="return false;"
+    on:contextmenu={handleClick} ondrop="return false;">
 </div>

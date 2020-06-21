@@ -13,15 +13,16 @@
 	import { gridStore } from '../stores/gridStore'
 	import bfpf from '../stores/breadthFirst.js'
 
-	let grid
+	let model
 
 	gridStore.subscribe(data => {
-		grid = data.grid
+		model = data
 	})
 
 	function find() {
-		gridStore.setVisited(false)
-		bfpf(grid)
+		// TODO: bake into one method
+		gridStore.resetHighlights()
+		gridStore.showPath(bfpf(model))
 		gridStore.showVisited()
 	}
 
@@ -31,9 +32,9 @@
 	<title>Algoviz</title>
 </svelte:head>
 
-<button on:click={find}>GO!</button>
+<button on:click={find}>Run Algorithm</button>
 <div class="back" ondragstart="return false;" ondrop="return false;">
-	{#each grid as column}
+	{#each model.grid as column}
 			<Column {column}/>
 	{/each}
 </div>

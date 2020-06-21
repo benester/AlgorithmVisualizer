@@ -5,8 +5,13 @@ export default class AlgoWizModel {
         this.columns = columns
         this.rows = rows
         this.grid = new Array(columns)
+        this.beginning
+        this.end
+        this.placing = 'beginning'
 
-        //refactor using functions and break out into method
+
+
+        //refactor: break out into method
         for (let x = 0; x < this.grid.length; x++)
             this.grid[x] = new Array(rows)
 
@@ -37,21 +42,45 @@ export default class AlgoWizModel {
             }
         }
 
-        this.grid[0][0].state = "beginning"
-        this.grid[columns - 4][rows - 5].state = "end"
-
     }
 
     click({ x, y }) {
         this.grid[x][y].click()
     }
 
+    rClick({ x, y }) {
+        if (this.grid[x][y].state == 'beginning' || this.grid[x][y].state == 'end') return
+        if (this.placing == 'beginning') {
+            if (this.beginning)
+                this.beginning.state = 'default'
+            this.grid[x][y].state = 'beginning'
+            this.beginning = this.grid[x][y]
+            this.placing = 'end'
+        } else {
+            if (this.end)
+                this.end.state = 'default'
+            this.grid[x][y].state = 'end'
+            this.end = this.grid[x][y]
+            this.placing = 'beginning'
+        }
+    }
+
     showVisited() {
         this.grid.forEach(col => col.forEach(sq => sq.showVisited()))
     }
 
-    setVisited(status) {
-        this.grid.forEach(col => col.forEach(sq => sq.setVisited(status)))
+    resetHighlights() {
+        this.grid.forEach(col => col.forEach(sq => sq.resetHighlights()))
+    }
+
+    showPath(square) {
+        if (!square) return
+        square.path.forEach(element => {
+            if (element.state == 'beginning') {
+                return
+            }
+            this.grid[element.x][element.y].state = 'path'
+        });
     }
 
 
@@ -60,9 +89,7 @@ export default class AlgoWizModel {
 
 
 
-
-
-
+    //deprecated
     showConnections({ x, y }) {
         this.grid[x][y].showConnections()
     }
