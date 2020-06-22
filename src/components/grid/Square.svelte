@@ -23,10 +23,18 @@
 
     .beginning {
         background-color: rgb(252, 252, 252);
+        background-image: url("../beginning.svg");
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
     }
 
     .end {
-        background-color: rgb(211, 24, 24);
+        background-color: rgb(252, 252, 252);
+        background-image: url("../end.svg");
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
     }
 
     .highlight {
@@ -69,6 +77,6 @@
 
 </script>
 
-<div class="{model.state}" on:click={handleClick} on:mouseover={handleMouseOver} ondragstart="return false;"
+<div class="{model.state}" on:mousedown={handleClick} on:mouseover={handleMouseOver} ondragstart="return false;"
     on:contextmenu={handleClick} ondrop="return false;">
 </div>
